@@ -1,0 +1,67 @@
+#%RAML 1.0
+title: American Flights API V2
+
+types:
+  AmericanFlight: !include datatype/AmericanFlightDataType.raml
+
+/flights:
+  get:
+    queryParameters:
+        destination:
+          required: false
+          enum:
+            - SFO
+            - LAX
+            - CLE
+    responses:
+      200:
+        body:
+          application/json:
+            type: AmericanFlight []
+            examples:
+              output: !include example/AmericanFlightsExample.raml
+  post:
+    body:
+      application/json:
+        type: AmericanFlight
+        examples:
+          input: !include examples/AmericanFlightNoIdExample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              message: Flight Added ( Not Really )
+
+  /{ID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: AmericanFlight
+              examples:
+                output: !include examples/AmericanFlightExample.raml
+  delete:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Flight deleted (but not really)
+  put:
+      body:
+        application/json:
+          type: AmericanFlight
+          examples:
+            input: !include examples/AmericanFlightNoIdExample.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Flight updated (but not really)
+
+
+
+
